@@ -418,8 +418,8 @@ static int verify_callback(void* param, mbedtls_x509_crt *crt, int depth, uint32
 			CertFreeCertificateContext(ctx);
 		}
 		PCCERT_CHAIN_CONTEXT chain_context = {0};
-		PCERT_CHAIN_PARA parameters = {0};
-		if(!CertGetCertificateChain(NULL, primary_context, NULL, store, parameters, 0, NULL, &chain_context)) {
+		CERT_CHAIN_PARA parameters = CERT_CHAIN_PARA();
+		if(!CertGetCertificateChain(NULL, primary_context, NULL, store, &parameters, 0, NULL, &chain_context)) {
 			return MBEDTLS_ERR_X509_FATAL_ERROR;
 		}
 		PCERT_CHAIN_POLICY_PARA policy_parameters = {0};
