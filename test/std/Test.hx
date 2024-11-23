@@ -1,3 +1,4 @@
+import sys.Http;
 import haxe.zip.Compress;
 import haxe.zip.Uncompress;
 import haxe.zip.FlushMode;
@@ -623,6 +624,15 @@ class Test extends utest.Test
       log("Test ssl");
 
       SslTest.socket_init();
+
+      final output = new haxe.io.BytesOutput();
+		final http = new Http("https://haxelib-files.haxe.org/files/3.0/haxelib-4,0,3.zip");
+		// final http = new Http("https://httpforever.com/");
+      http.onError = function(msg) {
+         throw msg;
+      };
+
+      http.customRequest(false, output);
 
       Assert.pass();
    }
