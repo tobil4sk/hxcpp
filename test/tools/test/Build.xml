@@ -1,0 +1,16 @@
+<xml>
+
+	<files id="lib">
+
+		<cache value="true" asLibrary="true" />
+		<file name="lib.c" />
+
+	</files>
+
+	<target id="default" output="lib${DBG}" tool="linker" toolid="static_link">
+
+		<files id="lib" />
+
+	</target>
+
+</xml>
