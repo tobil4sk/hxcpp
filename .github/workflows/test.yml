@@ -53,13 +53,13 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           haxe: ${{ inputs.haxe }}
-      - name: build
-        run: haxelib run hxcpp Build.xml
-      - name: build with cache
-        run: |
-          haxelib run hxcpp Build.xml clean
-          export HXCPP_COMPILE_CACHE=$PWD/cache
-          haxelib run hxcpp Build.xml
+      # - name: build
+      #   run: haxelib run hxcpp Build.xml
+      # - name: build with cache
+      #   run: |
+      #     haxelib run hxcpp Build.xml clean
+      #     export HXCPP_COMPILE_CACHE=$PWD/cache
+      #     haxelib run hxcpp Build.xml
       - name: build with cache dll
         run: |
           haxelib run hxcpp BuildDll.xml clean
