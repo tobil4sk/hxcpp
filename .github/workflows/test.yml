@@ -60,6 +60,11 @@ jobs:
           haxelib run hxcpp Build.xml clean
           export HXCPP_COMPILE_CACHE=$PWD/cache
           haxelib run hxcpp Build.xml
+      - name: build with cache dll
+        run: |
+          haxelib run hxcpp BuildDll.xml clean
+          export HXCPP_COMPILE_CACHE=$PWD/cache
+          haxelib run hxcpp BuildDll.xml
         shell: bash
 
   cffi:
