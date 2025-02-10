@@ -240,8 +240,18 @@ jobs:
         with:
           haxe: ${{ inputs.haxe }}
       - name: install haxe libs
+        if: ${{ !startsWith(inputs.haxe,'3') }}
         run: haxelib install compile-cpp.hxml --always
       - name: build
+        if: ${{ !startsWith(inputs.haxe,'3') }}
         run: haxe compile-cpp.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D no_http
       - name: run
+        if: ${{ !startsWith(inputs.haxe,'3') }}
         run: bin${{ inputs.sep }}cpp${{ inputs.sep }}TestMain-debug
+      - name: run full test suite
+        if: ${{ startsWith(inputs.haxe,'3') }}
+        working-directory: haxe/tests
+        run: |
+          haxe RunCi.hxml
+          TEST=cpp neko RunCi.n
+        shell: bash
