@@ -1,5 +1,11 @@
 import sys.FileSystem;
 
+#if haxe4
+import sys.thread.Thread;
+#else
+import neko.vm.Thread;
+#end
+
 class RunMain
 {
    public static function log(s:String) Sys.println(s);
@@ -31,7 +37,7 @@ class RunMain
       log("     neko build.n");
 
       var gotUserResponse = false;
-      sys.thread.Thread.create(function() {
+      Thread.create(function() {
          Sys.sleep(30);
          if (!gotUserResponse)
          {
