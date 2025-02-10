@@ -24,6 +24,7 @@ env:
 jobs:
   haxe:
     runs-on: ${{ inputs.os }}
+    if: ${{ !startsWith(inputs.haxe,'3') }}
     name: haxe
     defaults:
       run:
@@ -42,6 +43,7 @@ jobs:
 
   cffi:
     runs-on: ${{ inputs.os }}
+    if: ${{ !startsWith(inputs.haxe,'3') }}
     name: cffi
     defaults:
       run:
@@ -82,6 +84,7 @@ jobs:
           - suffix: -debug
             mode: debug
     runs-on: ${{ inputs.os }}
+    if: ${{ !startsWith(inputs.haxe,'3') }}
     name: telemetry (${{ matrix.mode }})
     defaults:
       run:
@@ -100,6 +103,7 @@ jobs:
 
   debugger:
     runs-on: ${{ inputs.os }}
+    if: ${{ !startsWith(inputs.haxe,'3') }}
     name: debugger
     defaults:
       run:
@@ -118,6 +122,7 @@ jobs:
 
   native:
       runs-on: ${{ inputs.os }}
+      if: ${{ !startsWith(inputs.haxe,'3') }}
       name: native
       defaults:
         run:
@@ -136,6 +141,7 @@ jobs:
 
   std:
       runs-on: ${{ inputs.os }}
+      if: ${{ !startsWith(inputs.haxe,'3') }}
       name: std
       defaults:
         run:
@@ -181,6 +187,7 @@ jobs:
           - suffix: -jit
             mode: jit
     runs-on: ${{ inputs.os }}
+    if: ${{ !startsWith(inputs.haxe,'3') }}
     name: cppia (${{ matrix.mode }})
     defaults:
       run:
@@ -221,6 +228,13 @@ jobs:
           repository: HaxeFoundation/haxe
           path: haxe
           ref: ${{ inputs.haxe }}
+      - name: apply haxe 3 test suite patches
+        if: startsWith(inputs.haxe, '3.')
+        run: |
+          git fetch origin 6b0fa1005dbb3fd3f027f8ea06a12007537b51e9
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git cherry-pick 6b0fa1005dbb3fd3f027f8ea06a12007537b51e9
       - name: setup
         uses: ./.github/workflows/setup
         with:
