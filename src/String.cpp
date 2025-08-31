@@ -1444,7 +1444,7 @@ String String::charAt( int at ) const
    if (isUTF16Encoded())
       return fromCharCode(__w[at]);
    #endif
-   return fromCharCode(__s[at]);
+   return fromCharCode((unsigned char)__s[at]);
 }
 
 void __hxcpp_bytes_of_string(Array<unsigned char> &outBytes,const String &inString)
@@ -1869,7 +1869,7 @@ Array<String> String::split(const String &inDelimiter) const
       else
       {
          for(int i=0;i<chars;i++)
-            result[i] = String::fromCharCode( __s[i] );
+            result[i] = String::fromCharCode( (unsigned char)__s[i] );
       }
       #else
       for(int i=0;i<chars; )
@@ -1986,7 +1986,7 @@ String String::substr(int inFirst, Dynamic inLen) const
    #endif
 
    if (len==1)
-      return String::fromCharCode(__s[inFirst]);
+      return String::fromCharCode((unsigned char)__s[inFirst]);
 
    return String( GCStringDup(__s+inFirst, len, 0), len );
 }
