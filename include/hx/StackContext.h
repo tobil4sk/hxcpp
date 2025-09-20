@@ -579,6 +579,7 @@ struct StackContext : public hx::ImmixAllocator
    void runVoid(void *vtable);
    Dynamic runObject(void *vtable);
    hx::Object *runObjectPtr(void *vtable);
+   void *runRawPtr(void *vtable);
 
    void push(bool &inValue) { *(int *)pointer = inValue; pointer += sizeof(int); }
    inline void pushBool(bool b) { *(int *)pointer = b; pointer += sizeof(int); }
@@ -594,6 +595,7 @@ struct StackContext : public hx::ImmixAllocator
 
    inline void returnBool(bool b) { *(int *)frame = b; }
    inline void returnInt(int i) { *(int *)frame = i; }
+   inline void returnRawPtr(void* ptr) { *(void **)frame = ptr; }
    inline bool getBool(int inPos=0) { return *(bool *)(frame+inPos); }
    inline int getInt(int inPos=0) { return *(int *)(frame+inPos); }
 
@@ -601,6 +603,7 @@ struct StackContext : public hx::ImmixAllocator
    inline String getString(int inPos=0);
    inline Dynamic getObject(int inPos=0);
    inline hx::Object *getObjectPtr(int inPos=0) { return *(hx::Object **)(frame+inPos); }
+   inline void *getRawPtr(int inPos=0) { return *(void **)(frame+inPos); }
 
 
    void breakFlag() { breakContReturn |= bcrBreak; }

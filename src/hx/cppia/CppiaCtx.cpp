@@ -71,6 +71,11 @@ hx::Object *StackContext::runObjectPtr(void *vtable)
    //printf("No Object return?\n");
    return 0;
 }
+void* StackContext::runRawPtr(void* vtable) {
+   if (breakContReturn) return nullptr;
+   GET_RETURN_VAL(return getRawPtr(), etObject);
+   return nullptr;
+}
 
 
 int runContextConvertInt(StackContext *ctx, ExprType inType, void *inFunc)
