@@ -37,8 +37,14 @@ void HaxeNativeClass::addVtableEntries( std::vector<std::string> &outVtable)
 
    if (functions)
       for(ScriptNamedFunction *func = functions; func->name; func++)
-         if (!func->isStatic)
-            outVtable.push_back( func->name );
+         if (!func->isStatic) {
+            /* toString should always go into the first vtable slot */
+            if (strcmp(func->name, "toString") || outVtable.empty()) {
+               outVtable.push_back( func->name );
+            } else {
+               outVtable[0] = func->name;
+            }
+         }
 }
 
 void HaxeNativeClass::dump()
