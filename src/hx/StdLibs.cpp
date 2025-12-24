@@ -49,6 +49,14 @@ typedef int64_t __int64;
 #define PRINTF printf
 #endif
 
+#if defined(HX_WINDOWS) && defined(HX_SMART_STRINGS)
+#ifdef HX_WINRT
+#define PRINTF WINRT_PRINTF
+#else
+#define WPRINTF wprintf
+#endif
+#endif
+
 void __hx_stack_set_last_exception();
 void __hx_stack_push_last_exception();
 
@@ -607,8 +615,16 @@ Array<String> __get_args()
 
 void __hxcpp_print_string(const String &inV)
 {
+#if defined(HX_WINDOWS) && defined(HX_SMART_STRINGS)
+   if (inV.isUTF16Encoded()) {
+      WPRINTF("%ls", inV.raw_wptr());
+   } else {
+      PRINTF("%s", inV.raw_ptr());
+   }
+#else
    hx::strbuf convertBuf;
    PRINTF("%s", inV.out_str(&convertBuf) );
+#endif
 }
 
 void __hxcpp_println_string(const String &inV)
