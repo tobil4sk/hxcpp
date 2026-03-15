@@ -75,6 +75,38 @@ jobs:
       ext: .dylib
       os: macos-latest
 
+  IOSX86_64:
+    strategy:
+      fail-fast: false
+      matrix:
+        haxe: [ 4.3.7, latest ]
+    uses: ./.github/workflows/test.yml
+    name: Test IOS (x86_64)
+    with:
+      haxe: ${{ matrix.haxe  }}
+      arch: 64
+      sep: /
+      ext: .dso
+      os: macos-latest
+      target_flag: ios
+      execute: false
+
+  IOSArm64:
+    strategy:
+      fail-fast: false
+      matrix:
+        haxe: [ 4.3.7, latest ]
+    uses: ./.github/workflows/test.yml
+    name: Test IOS (Arm64)
+    with:
+      haxe: ${{ matrix.haxe  }}
+      arch: Arm64
+      sep: /
+      ext: .dso
+      os: macos-latest
+      target_flag: ios
+      execute: false
+
   Linux32:
     strategy:
       fail-fast: false
