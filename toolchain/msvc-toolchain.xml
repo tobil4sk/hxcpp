@@ -3,7 +3,7 @@
 
 <!-- WINDOWS TOOLS -->
 
-<set name="TOOLS_EXE_SUFFIX" value=".exe" unless="linux_host" />
+<set name="TOOLS_EXE_SUFFIX" value=".exe" unless="linux_host || mac_host" />
 
 <section if="HXCPP_MSVC_LLVM" >
 

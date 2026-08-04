@@ -2173,8 +2173,13 @@ class BuildTool
          if (defines.exists("windows"))
          {
             defines.set("mac_host","1");
-            defines.set("mingw", "mingw");
-            defines.set("toolchain","mingw");
+            if (defines.exists("HXCPP_MSVC_LLVM"))
+               defines.set("toolchain", "msvc");
+            else
+            {
+               defines.set("toolchain","mingw");
+               defines.set("mingw", "mingw");
+            }
             defines.set("xcompile","1");
             defines.set("BINDIR", arm64 ? "WindowsArm64" : m64 ? "Windows64":"Windows");
          }
