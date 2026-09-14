@@ -836,7 +836,7 @@ class Setup
             Sys.putEnv("HXCPP_WINXP_COMPAT","1");
             xpCompat = true;
          }
-         Sys.putEnv("msvc_host_arch", ioDefines.exists("windows_arm_host") ? "x86" : "x64" );
+         Sys.putEnv("msvc_host_arch", ioDefines.exists("windows_arm_host") ? "arm64" : "x64" );
 
          trace("msvc_host_arch: " + Sys.getEnv("msvc_host_arch"));
 
