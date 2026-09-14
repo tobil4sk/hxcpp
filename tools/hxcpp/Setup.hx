@@ -838,6 +838,8 @@ class Setup
          }
          Sys.putEnv("msvc_host_arch", ioDefines.exists("windows_arm_host") ? "x86" : "x64" );
 
+         trace("msvc_host_arch: " + Sys.getEnv("msvc_host_arch"));
+
          var vc_setup_proc = new Process("cmd.exe", ["/C", BuildTool.HXCPP + "\\toolchain\\msvc" + extra + "-setup.bat" ]);
          var vars_found = false;
          var error_string = "";
