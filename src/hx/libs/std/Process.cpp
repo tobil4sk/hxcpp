@@ -11,6 +11,7 @@
 #   include <memory.h>
 #   include <errno.h>
 #   include <signal.h>
+#   include <fcntl.h>
 #   if defined(ANDROID) || defined(BLACKBERRY) || defined(__EMSCRIPTEN__)
 #      include <sys/wait.h>
 #   elif !defined(NEKO_MAC)
@@ -276,6 +277,13 @@ Dynamic _hx_std_process_run( String cmd, Array<String> vargs, int inShowParam )
    int input[2], output[2], error[2];
    if( pipe(input) || pipe(output) || pipe(error) )
       return null();
+      
+   fcntl(input[0], F_SETFD, FD_CLOEXEC);
+   fcntl(input[1], F_SETFD, FD_CLOEXEC);
+   fcntl(output[0], F_SETFD, FD_CLOEXEC);
+   fcntl(output[1], F_SETFD, FD_CLOEXEC);
+   fcntl(error[0], F_SETFD, FD_CLOEXEC);
+   fcntl(error[1], F_SETFD, FD_CLOEXEC);
 
    hx::strbuf buf;
    std::vector< std::string > values;
