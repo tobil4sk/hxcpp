@@ -42,7 +42,7 @@ jobs:
           ulimit -n
           ulimit -n 256
           ulimit -n
-          haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D CXX=$(pwd)/../../tools/cc/bin/g++
+          haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D CXX=$(pwd)/../../tools/cc/bin/g++ -D HXCPP_COMPILE_THREADS=1
       - name: run
         run: bin${{ inputs.sep }}TestMain
 
