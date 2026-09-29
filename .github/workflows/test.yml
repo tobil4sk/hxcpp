@@ -37,8 +37,8 @@ jobs:
           haxe: ${{ inputs.haxe }}
       - name: build
         run: |
-          haxe -C ../../tools/hxcpp compile-cpp.hxml
           haxe -C ../../tools/cc -m Main --cpp bin -D destination=g++
+          haxe -C ../../tools/hxcpp compile-cpp.hxml
           export PATH=$(pwd)/../../tools/cc/bin:$PATH
           ulimit -n
           ulimit -n 256
