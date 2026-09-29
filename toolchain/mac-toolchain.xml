@@ -18,6 +18,7 @@
 
 <compiler id="darwin" exe="g++" if="macos">
   <exe name="xcrun --sdk macosx${MACOSX_VER} clang++" if="HXCPP_CLANG" />
+  <exe name="${CXX}" if="CXX" />
   <flag value="-c"/>
   <flag value="-fvisibility=hidden"/>
   
@@ -59,6 +60,7 @@
 
 <linker id="dll" exe="g++" if="macos">
   <exe name="xcrun --sdk macosx${MACOSX_VER} clang++" if="HXCPP_CLANG" />
+  <exe name="${CXX}" if="CXX" />
   <fromfile value="" if="GCC_OLD" />
   <flag value="-Wl,-bundle,-bundle_loader,${dll_import_link}" if="dll_import_link" />
   <flag value="-Wl,-cache_path_lto,/tmp" if="HXCPP_LTO_THIN" unless="debug"/>
@@ -83,6 +85,7 @@
 
 <linker id="exe" exe="g++" if="macos">
   <exe name="xcrun --sdk macosx${MACOSX_VER} clang++" if="HXCPP_CLANG" />
+  <exe name="${CXX}" if="CXX" />
   <!-- <flag value="-Wl,-stack_size,0x8000"/> -->
   <flag value="-rpath" />
   <flag value="@executable_path"/>
