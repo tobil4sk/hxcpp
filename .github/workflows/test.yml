@@ -36,7 +36,10 @@ jobs:
         with:
           haxe: ${{ inputs.haxe }}
       - name: build
-        run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
+        run: |
+          ulimit -n
+          ulimit -n 256
+          haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
       - name: run
         run: bin${{ inputs.sep }}TestMain
 
