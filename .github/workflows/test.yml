@@ -38,8 +38,11 @@ jobs:
       - name: build
         run: |
           haxe -C ../../tools/hxcpp compile-cpp.hxml
+          haxe -C ../../tools/cc -m Main --cpp bin -D destination=g++
+          export PATH=$(pwd)/../../tools/cc/bin:$PATH
           ulimit -n
           ulimit -n 256
+          ulimit -n
           haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
       - name: run
         run: bin${{ inputs.sep }}TestMain
