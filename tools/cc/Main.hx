@@ -33,5 +33,5 @@ function main() {
     final fileDescriptors = getFileDescriptors();
     trace("child " + fileDescriptors.length + " - " + fileDescriptors);
   }
-  Sys.command("/usr/bin/g++", Sys.args());
+  Sys.command("g++", Sys.args());
 }
