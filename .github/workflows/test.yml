@@ -37,6 +37,7 @@ jobs:
           haxe: ${{ inputs.haxe }}
       - name: build
         run: |
+          haxe -C ../../tools/hxcpp compile-cpp.hxml
           ulimit -n
           ulimit -n 256
           haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
