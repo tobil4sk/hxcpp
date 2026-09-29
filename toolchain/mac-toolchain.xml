@@ -21,6 +21,7 @@
   <exe name="${CXX}" if="CXX" />
   <flag value="-c"/>
   <flag value="-fvisibility=hidden"/>
+  <flag value="-H"/>
   
   <cppflag value="-frtti"/>
   <pchflag value="-x" />
