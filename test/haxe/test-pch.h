@@ -5,6 +5,7 @@
 #include <atomic>
 #include <algorithm>
 #include <typeindex>
+#include <string>
 
 #endif
 
