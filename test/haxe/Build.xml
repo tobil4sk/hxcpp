@@ -1,17 +1,6 @@
 <xml>
 <set name="HXCPP_API_LEVEL" value="500" />
-
-<files id="haxe">
-</files>
-<files id="__lib__">
-</files>
-<files id="__main__">
-</files>
-<files id="__resources__">
-</files>
-<files id="__externs__">
-</files>
 <set name="HAXE_OUTPUT" value="TestMain" />
-<include name="${HXCPP}/build-tool/BuildCommon.xml"/>
+<include name="haxe-target.xml"/>
 <error value="Hxcpp is out of date - please update" unlessApi="500" />
 </xml>
