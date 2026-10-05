@@ -1,5 +1,5 @@
-#ifndef HXCPP_H
-#define HXCPP_H
+#ifndef TEST_HPP 
+#define TEST_HPP
 
 #include <typeinfo>
 #include <atomic>

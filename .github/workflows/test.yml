@@ -45,11 +45,11 @@ jobs:
           #haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D HXCPP_COMPILE_THREADS=1
           #haxelib run hxcpp Build.xml -D${{ env.HXCPP_ARCH_FLAG }} -DHXCPP_COMPILE_THREADS=1 -DHXCPP_VERBOSE
           echo Without pch
-          clang++ -c -H test-pch.c -otest-pch.o
+          clang++ -c -H test.cpp -otest.o
           echo Compiling pch
-          clang++ -c -H -o test-pch.h.pch ./test-pch.h
+          clang++ -c -H -o test.pch ./test.hpp
           echo With pch
-          clang++ -c -H -include-pch test-pch.h.pch test-pch.c -otest-pch.o
+          clang++ -c -H -include-pch test.pch test.cpp -otest.o
       - name: run
         run: bin${{ inputs.sep }}TestMain
 
