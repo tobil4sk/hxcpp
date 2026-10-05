@@ -2,11 +2,9 @@
 #include <atomic>
 #include <mutex>
 #include <list>
-#include <hx/thread/Thread.hpp>
-#include <hx/thread/RecursiveMutex.hpp>
-#include <hx/thread/ThreadLocal.hpp>
-#include "ThreadImpl.hpp"
+#include <thread>
 
+#if 0
 struct hx::thread::ThreadLocal_obj::Impl
 {
 	static std::mutex slotLock;
@@ -65,3 +63,5 @@ void hx::thread::ThreadLocal_obj::set(Dynamic obj)
 
 	current->setSlot(impl->slot, obj);
 }
+
+#endif
