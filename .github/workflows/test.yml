@@ -31,10 +31,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
-      - name: setup
-        uses: ./.github/workflows/setup
-        with:
-          haxe: ${{ inputs.haxe }}
+      #- name: setup
+      #  uses: ./.github/workflows/setup
+      #  with:
+      #    haxe: ${{ inputs.haxe }}
       - name: build
         run: |
           #haxe -C ../../tools/cc -m Main --cpp bin -D destination=g++
