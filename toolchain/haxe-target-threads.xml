@@ -1,10 +1,13 @@
 ﻿<xml>
   <depend name="${HXCPP}/src/hx/thread/ThreadImpl.hpp"/>
 
+  <!--
   <file name="src/hx/thread/RecursiveMutex.cpp"/>
   <file name="src/hx/thread/ConditionVariable.cpp"/>
   <file name="src/hx/thread/ThreadImpl.cpp"/>
+  -->
   <file name="src/hx/thread/ThreadLocal.cpp"/>
+  <!--
   <file name="src/hx/thread/Scratch.cpp"/>
 
   <section if="windows">
@@ -27,5 +30,6 @@
     <file name="src/hx/thread/CountingSemaphore.unsupported.cpp"/>
     <file name="src/hx/thread/ThreadImpl.noop.cpp"/>
   </section>
+  -->
 
 </xml>

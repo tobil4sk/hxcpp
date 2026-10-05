@@ -176,6 +176,7 @@
 
   <precompiledheader name="hxcpp" dir="${HXCPP}/include" />
 
+  <!--
   <file name = "src/hx/Anon.cpp"/>
   <file name = "src/hx/Boot.cpp"/>
   <file name = "src/hx/CFFI.cpp" tags="haxe,static,cffi" />
@@ -209,6 +210,7 @@
   <file name = "src/String.cpp" tags="haxe,hxstring" />
 
   <file name = "src/cpp/encoding/Encodings.cpp" />
+  -->
 
   <include name="${HXCPP_THREAD_XML}"/>
 
