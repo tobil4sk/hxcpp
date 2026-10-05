@@ -4,6 +4,7 @@
 #include <typeinfo>
 #include <atomic>
 #include <algorithm>
+#include <typeindex>
 
 #endif
 
