@@ -42,7 +42,8 @@ jobs:
           ulimit -n
           ulimit -n 256
           ulimit -n
-          haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D HXCPP_COMPILE_THREADS=1
+          #haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D HXCPP_COMPILE_THREADS=1
+          haxelib run hxcpp Build.xml -D${{ env.HXCPP_ARCH_FLAG }} -DHXCPP_COMPILE_THREADS=1
       - name: run
         run: bin${{ inputs.sep }}TestMain
 

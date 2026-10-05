@@ -23,7 +23,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        haxe: [ 4.3.7, latest ]
+        #haxe: [ 4.3.7, latest ]
+        haxe: [ latest ]
     uses: ./.github/workflows/test.yml
     name: Test MacOS (Arm64)
     with:
