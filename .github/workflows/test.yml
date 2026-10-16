@@ -42,7 +42,7 @@ jobs:
         run: |
           echo "VS120COMNTOOLS=C:\Program Files (x86)\MSBuild\12.0\bin\" >> $env:GITHUB_ENV
       - name: build
-        run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D HXCPP_MSVC_VER=120
+        run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D HXCPP_MSVC_VER=120 -D HXCPP_VERBOSE
       - name: run
         run: bin${{ inputs.sep }}TestMain
 
