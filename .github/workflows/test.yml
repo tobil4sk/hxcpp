@@ -38,6 +38,9 @@ jobs:
       - name: Install VS2013 Build Tools
         run: |
           choco install microsoft-build-tools-2013 -y
+      - name: Set VS120COMNTOOLS Environment Variable
+        run: |
+          echo "VS120COMNTOOLS=C:\Program Files (x86)\MSBuild\12.0\bin\" >> $env:GITHUB_ENV
       - name: build
         run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D HXCPP_MSVC_VER=120
       - name: run
