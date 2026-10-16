@@ -35,9 +35,13 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           haxe: ${{ inputs.haxe }}
-      - name: Install VS2013
+      - name: Enable Legacy Windows Prerequisites
         run: |
-          choco install visualstudiocommunity2013 -y
+          Install-WindowsFeature Net-Framework-Core
+
+      - name: Install Visual Studio 2013 Community
+        run: |
+          choco install visualstudiocommunity2013 -y --ignore-checksums --force
       - name: Set VS120COMNTOOLS Environment Variable
         run: |
           echo "VS120COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\" >> $env:GITHUB_ENV
