@@ -37,7 +37,7 @@ jobs:
           haxe: ${{ inputs.haxe }}
       - name: Install Visual Studio 2015 Build Tools
         run: |
-          choco install microsoft-build-tools-2015 -y
+          choco install vcbuildtools -y
 
       - name: Export VS140COMNTOOLS Environment Variable
         run: |
