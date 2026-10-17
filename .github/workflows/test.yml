@@ -35,37 +35,15 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           haxe: ${{ inputs.haxe }}
-      - name: Download & Install Visual Studio 2013 from ISO
-        shell: powershell
+      - name: Install Visual Studio 2015 Build Tools
         run: |
-          # 1. Enforce TLS 1.2 for all downloads in this process
-          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          choco install microsoft-build-tools-2015 -y
 
-          $isoUrl = "http://download.microsoft.com/download/E/2/A/E2ADF1BE-8FA0-4436-A260-8780444C8355/vs2013.5_ult_enu.iso"
-          $isoPath = "C:\vs2013.iso"
-
-          Write-Host "Downloading VS2013 Update 5 ISO via curl..."
-          # Using curl.exe avoids PowerShell memory-buffering issues on 5GB files
-          curl.exe -L -o $isoPath $isoUrl
-
-          Write-Host "Mounting ISO..."
-          $mountResult = Mount-DiskImage -ImagePath $isoPath -PassThru
-          $driveLetter = ($mountResult | Get-Volume).DriveLetter + ":"
-          Write-Host "Mounted to drive $driveLetter"
-
-          Write-Host "Running authentic VS2013 Setup silently (takes ~10-15 min)..."
-          $setupExe = "$driveLetter\vs_ultimate.exe"
-          $process = Start-Process -FilePath $setupExe -ArgumentList "/Passive /NoRestart /Log C:\vs2013_install.log" -Wait -PassThru
-
-          Write-Host "Installer finished with exit code: $($process.ExitCode)"
-          
-          # Dismount ISO to recover disk space
-          Dismount-DiskImage -ImagePath $isoPath
-      - name: Set VS120COMNTOOLS Environment Variable
+      - name: Export VS140COMNTOOLS Environment Variable
         run: |
-          echo "VS120COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\" >> $env:GITHUB_ENV
+          echo "VS140COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\" >> $env:GITHUB_ENV
       - name: build
-        run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D HXCPP_MSVC_VER=120 -D HXCPP_VERBOSE
+        run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D HXCPP_MSVC_VER=140 -D HXCPP_VERBOSE
       - name: run
         run: bin${{ inputs.sep }}TestMain
 
