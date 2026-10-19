@@ -35,29 +35,16 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           haxe: ${{ inputs.haxe }}
-      - name: Download & Install Visual Studio 2015 Community (ISO)
+      - name: Download ISO via Powershell WebClient
         shell: powershell
         run: |
-          # Force TLS 1.2 protocol
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-          $isoUrl = "https://download.microsoft.com/download/0/B/5/0B51089A-B5B6-419C-A8A6-93500A4D9F21/vs2015.3.com_enu.iso"
-          $isoPath = "C:\vs2015.iso"
-
-          Write-Host "Downloading VS2015 Update 3 ISO..."
-          curl.exe -L -o $isoPath $isoUrl
-
-          Write-Host "Mounting ISO..."
-          $mountResult = Mount-DiskImage -ImagePath $isoPath -PassThru
-          $driveLetter = ($mountResult | Get-Volume).DriveLetter + ":"
-
-          Write-Host "Running authentic VS2015 Setup silently..."
-          $setupExe = "$driveLetter\vs_community.exe"
-          $process = Start-Process -FilePath $setupExe -ArgumentList "/Passive /NoRestart /Log C:\vs2015_install.log" -Wait -PassThru
-
-          Write-Host "Installer finished with exit code: $($process.ExitCode)"
-          Dismount-DiskImage -ImagePath $isoPath
-
+          $client = New-Object System.Net.WebClient
+          $client.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+          
+          $url = "https://download.microsoft.com/download/0/B/5/0B51089A-B5B6-419C-A8A6-93500A4D9F21/vs2015.3.com_enu.iso"
+          Write-Host "Downloading ISO via WebClient..."
+          $client.DownloadFile($url, "C:\vs2015.iso")
       - name: Export VS140COMNTOOLS Environment Variable
         run: |
           echo "VS140COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\" >> $env:GITHUB_ENV
