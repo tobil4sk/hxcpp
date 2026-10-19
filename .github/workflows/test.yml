@@ -35,27 +35,25 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           haxe: ${{ inputs.haxe }}
-      - name: Download VS2015 Web Installer
+      - name: Download VS2015 Standalone C++ Build Tools
         shell: powershell
         run: |
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-          $url = "https://go.microsoft.com/fwlink/?LinkId=691129"
-          $exePath = "C:\vs_community.exe"
+          $url = "https://download.microsoft.com/download/5/f/7/5f7754ea-83dd-4d18-a633-89d16c0284e3/visualcppbuildtools_full.exe"
+          $exePath = "C:\visualcppbuildtools_full.exe"
           
-          Write-Host "Downloading VS2015 setup bootstrapper..."
+          Write-Host "Downloading VS2015 C++ Build Tools setup..."
           $client = New-Object System.Net.WebClient
           $client.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
           $client.DownloadFile($url, $exePath)
-          
-          Write-Host "File size: $((Get-Item $exePath).Length) bytes"
 
-      - name: Install Visual Studio 2015
+      - name: Install C++ Build Tools 2015
         shell: powershell
         run: |
-          Write-Host "Starting Visual Studio 2015 silent installation..."
-          $process = Start-Process -FilePath "C:\vs_community.exe" -ArgumentList "/Passive /NoRestart /SelectedInstallAutomated /Log C:\vs2015_install.log" -Wait -PassThru
-    
-          Write-Host "Installer finished with exit code: $($process.ExitCode)"
+          Write-Host "Installing VS2015 C++ toolset..."
+          $process = Start-Process -FilePath "C:\visualcppbuildtools_full.exe" -ArgumentList "/Full /Passive /NoRestart /Log C:\vs2015_cpp.log" -Wait -PassThru
+          
+          Write-Host "Installer exited with code: $($process.ExitCode)"
       - name: Export VS140COMNTOOLS Environment Variable
         run: |
           echo "VS140COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\" >> $env:GITHUB_ENV
