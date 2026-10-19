@@ -35,16 +35,27 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           haxe: ${{ inputs.haxe }}
-      - name: Download ISO via Powershell WebClient
+      - name: Download VS2015 Web Installer
         shell: powershell
         run: |
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          $url = "https://go.microsoft.com/fwlink/?LinkId=691129"
+          $exePath = "C:\vs_community.exe"
+          
+          Write-Host "Downloading VS2015 setup bootstrapper..."
           $client = New-Object System.Net.WebClient
           $client.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+          $client.DownloadFile($url, $exePath)
           
-          $url = "https://download.microsoft.com/download/0/B/5/0B51089A-B5B6-419C-A8A6-93500A4D9F21/vs2015.3.com_enu.iso"
-          Write-Host "Downloading ISO via WebClient..."
-          $client.DownloadFile($url, "C:\vs2015.iso")
+          Write-Host "File size: $((Get-Item $exePath).Length) bytes"
+
+      - name: Install Visual Studio 2015
+        shell: powershell
+        run: |
+          Write-Host "Starting Visual Studio 2015 silent installation..."
+          $process = Start-Process -FilePath "C:\vs_community.exe" -ArgumentList "/Passive /NoRestart /SelectedInstallAutomated /Log C:\vs2015_install.log" -Wait -PassThru
+    
+          Write-Host "Installer finished with exit code: $($process.ExitCode)"
       - name: Export VS140COMNTOOLS Environment Variable
         run: |
           echo "VS140COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\" >> $env:GITHUB_ENV
