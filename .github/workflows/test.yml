@@ -35,9 +35,28 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           haxe: ${{ inputs.haxe }}
-      - name: Install Visual Studio 2015 Build Tools
+      - name: Download & Install Visual Studio 2015 Community (ISO)
+        shell: powershell
         run: |
-          choco install vcbuildtools -y
+          # Force TLS 1.2 protocol
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+          $isoUrl = "https://download.microsoft.com/download/0/B/5/0B51089A-B5B6-419C-A8A6-93500A4D9F21/vs2015.3.com_enu.iso"
+          $isoPath = "C:\vs2015.iso"
+
+          Write-Host "Downloading VS2015 Update 3 ISO..."
+          curl.exe -L -o $isoPath $isoUrl
+
+          Write-Host "Mounting ISO..."
+          $mountResult = Mount-DiskImage -ImagePath $isoPath -PassThru
+          $driveLetter = ($mountResult | Get-Volume).DriveLetter + ":"
+
+          Write-Host "Running authentic VS2015 Setup silently..."
+          $setupExe = "$driveLetter\vs_community.exe"
+          $process = Start-Process -FilePath $setupExe -ArgumentList "/Passive /NoRestart /Log C:\vs2015_install.log" -Wait -PassThru
+
+          Write-Host "Installer finished with exit code: $($process.ExitCode)"
+          Dismount-DiskImage -ImagePath $isoPath
 
       - name: Export VS140COMNTOOLS Environment Variable
         run: |
