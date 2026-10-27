@@ -46,9 +46,12 @@ jobs:
         uses: ./.github/workflows/setup
         with:
           haxe: ${{ inputs.haxe }}
-      - uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r9d
+      - name: Setup Android NDK r9d
+        run: |
+          curl -sS http://dl.google.com/android/ndk/android-ndk-r9d-linux-x86_64.tar.bz2 -o ndk-r9d.tar.bz2
+          tar -xjf ndk-r9d.tar.bz2
+          echo "$GITHUB_WORKSPACE/android-ndk-r9d" >> $GITHUB_PATH
+          echo "ANDROID_NDK_HOME=$GITHUB_WORKSPACE/android-ndk-r9d" >> $GITHUB_ENV
       - name: build
         run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} ${{ env.HAXE_TARGET_FLAG }}
       - name: run
