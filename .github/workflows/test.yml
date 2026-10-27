@@ -52,6 +52,7 @@ jobs:
           tar -xjf ndk-r9d.tar.bz2
           echo "$GITHUB_WORKSPACE/android-ndk-r9d" >> $GITHUB_PATH
           echo "ANDROID_NDK_HOME=$GITHUB_WORKSPACE/android-ndk-r9d" >> $GITHUB_ENV
+          ls $GITHUB_WORKSPACE
       - name: build
         run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} ${{ env.HAXE_TARGET_FLAG }} -D HXCPP_VERBOSE -D ANDROID_NDK_ROOT=${{ env.ANDROID_NDK_HOME }}
       - name: run
