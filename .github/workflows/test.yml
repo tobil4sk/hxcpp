@@ -53,7 +53,7 @@ jobs:
           echo "$GITHUB_WORKSPACE/android-ndk-r9d" >> $GITHUB_PATH
           echo "ANDROID_NDK_HOME=$GITHUB_WORKSPACE/android-ndk-r9d" >> $GITHUB_ENV
       - name: build
-        run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} ${{ env.HAXE_TARGET_FLAG }} -D HXCPP_VERBOSE -D ANDROID_NDK_HOME=${{ env.ANDROID_NDK_HOME }}
+        run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} ${{ env.HAXE_TARGET_FLAG }} -D HXCPP_VERBOSE -D ANDROID_NDK_ROOT=${{ env.ANDROID_NDK_HOME }}
       - name: run
         if: inputs.execute
         run: bin${{ inputs.sep }}TestMain
