@@ -48,7 +48,7 @@ jobs:
           haxe: ${{ inputs.haxe }}
       - uses: nttld/setup-ndk@v1
         with:
-          ndk-version: r8e
+          ndk-version: r9d
       - name: build
         run: haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }} ${{ env.HAXE_TARGET_FLAG }}
       - name: run
