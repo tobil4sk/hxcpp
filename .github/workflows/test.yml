@@ -16,7 +16,8 @@ on:
         type: string
 
 env:
-  HXCPP_ARCH_FLAG: ${{ inputs.arch == 'Arm64' && 'HXCPP_ARM64' || format('HXCPP_M{0}', inputs.arch) }}
+  HAXE_ARCH_FLAG: ${{ inputs.arch == 32 && '-D HXCPP_M32' || '' }}
+  HXCPP_ARCH_FLAG: ${{ inputs.arch == 32 && '-DHXCPP_M32' || '' }}
 
 defaults:
   run:
@@ -51,7 +52,7 @@ jobs:
         working-directory: test/haxe
         run: |
           set -x
-          haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
+          haxe compile.hxml ${{ env.HAXE_ARCH_FLAG }}
           bin/TestMain
 
       - name: std
@@ -67,13 +68,13 @@ jobs:
         working-directory: test/native
         run: |
           set -x
-          haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
+          haxe compile.hxml ${{ env.HAXE_ARCH_FLAG }}
           bin/Native
 
       - name: regression
         if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         working-directory: test/regression
-        run: haxe --run Run -D ${{ env.HXCPP_ARCH_FLAG }}
+        run: haxe --run Run ${{ env.HAXE_ARCH_FLAG }}
 
   tools:
     runs-on: ${{ inputs.os }}
@@ -93,10 +94,10 @@ jobs:
         working-directory: test/cffi
         run: |
           set -x
-          (cd project && haxelib run hxcpp build.xml -Ddebug -D${{ env.HXCPP_ARCH_FLAG }})
-          haxe compile.hxml --debug -D ${{ env.HXCPP_ARCH_FLAG }}
-          haxe compile-utf8.hxml --debug -D ${{ env.HXCPP_ARCH_FLAG }}
-          haxe compile-neko.hxml --debug -D ${{ env.HXCPP_ARCH_FLAG }}
+          (cd project && haxelib run hxcpp build.xml -Ddebug ${{ env.HXCPP_ARCH_FLAG }})
+          haxe compile.hxml --debug ${{ env.HAXE_ARCH_FLAG }}
+          haxe compile-utf8.hxml --debug ${{ env.HAXE_ARCH_FLAG }}
+          haxe compile-neko.hxml --debug ${{ env.HAXE_ARCH_FLAG }}
           cp project/ndll/*/prime${{ inputs.ext }} bin/neko/prime.ndll
           bin/cpp/TestMain-debug
           bin/cpp-utf8/TestMain-debug
@@ -109,7 +110,7 @@ jobs:
         working-directory: test/telemetry
         run: |
           set -x
-          haxe compile.hxml -debug -D ${{ env.HXCPP_ARCH_FLAG }}
+          haxe compile.hxml -debug ${{ env.HAXE_ARCH_FLAG }}
           bin/TestMain-debug
 
       - name: telemetry (release)
@@ -117,7 +118,7 @@ jobs:
         working-directory: test/telemetry
         run: |
           set -x
-          haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
+          haxe compile.hxml ${{ env.HAXE_ARCH_FLAG }}
           bin/TestMain
 
       - name: debugger
@@ -125,7 +126,7 @@ jobs:
         working-directory: test/debugger
         run: |
           set -x
-          haxe compile.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
+          haxe compile.hxml ${{ env.HAXE_ARCH_FLAG }}
           bin/App-debug
 
       - name: build tool
@@ -154,9 +155,9 @@ jobs:
           haxe: ${{ inputs.haxe }}
           arch: ${{ inputs.arch }}
       - name: build host
-        run: haxe compile-host.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
+        run: haxe compile-host.hxml ${{ env.HAXE_ARCH_FLAG }}
       - name: build client
-        run: haxe compile-client.hxml -D ${{ env.HXCPP_ARCH_FLAG }}
+        run: haxe compile-client.hxml ${{ env.HAXE_ARCH_FLAG }}
       - name: run (interp)
         id: interp
         run: bin/CppiaHost bin/client.cppia
@@ -212,6 +213,6 @@ jobs:
         # haxe 4 tests don't build with latest utest
         if: inputs.haxe != 'latest'
       - name: build
-        run: haxe compile-cpp.hxml -D ${{ env.HXCPP_ARCH_FLAG }} -D no_http
+        run: haxe compile-cpp.hxml ${{ env.HAXE_ARCH_FLAG }} -D no_http
       - name: run
         run: bin/cpp/TestMain-debug
