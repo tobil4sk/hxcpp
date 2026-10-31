@@ -52,7 +52,7 @@ jobs:
         working-directory: test/haxe
         run: |
           set -x
-          haxe compile.hxml ${{ env.HAXE_ARCH_FLAG }}
+          haxe compile.hxml ${{ env.HAXE_ARCH_FLAG }} -D HXCPP_VERBOSE
           bin/TestMain
 
       - name: std
