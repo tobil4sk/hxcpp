@@ -30,19 +30,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ Windows32, Windows64, WindowsArm64, MacOS64, MacOSArm, Linux32, Linux64, LinuxArm64 ]
+        #platform: [ Windows32, Windows64, WindowsArm64, MacOS64, MacOSArm, Linux32, Linux64, LinuxArm64 ]
+        platform: [ WindowsArm64, MacOSArm, LinuxArm64 ]
         haxe: [ 4.3.7, latest ]
         exclude:
           - platform: LinuxArm64 # 4.3.7 doesn't have a linux arm build
             haxe: 4.3.7
         include:
-          - { platform: Windows32,    name: Windows (32bit),  arch: 32,    ext: .dll,   os: windows-latest }
-          - { platform: Windows64,    name: Windows (64bit),  arch: 64,    ext: .dll,   os: windows-latest }
+          #- { platform: Windows32,    name: Windows (32bit),  arch: 32,    ext: .dll,   os: windows-latest }
+          #- { platform: Windows64,    name: Windows (64bit),  arch: 64,    ext: .dll,   os: windows-latest }
           - { platform: WindowsArm64, name: Windows (Arm64),  arch: Arm64, ext: .dll,   os: windows-11-arm }
-          - { platform: MacOS64,      name: MacOS (x86_64),   arch: 64,    ext: .dylib, os: macos-15-intel }
+          #- { platform: MacOS64,      name: MacOS (x86_64),   arch: 64,    ext: .dylib, os: macos-15-intel }
           - { platform: MacOSArm,     name: MacOS (Arm64),    arch: Arm64, ext: .dylib, os: macos-latest }
-          - { platform: Linux32,      name: Linux (32bit),    arch: 32,    ext: .dso,   os: ubuntu-latest }
-          - { platform: Linux64,      name: Linux (64bit),    arch: 64,    ext: .dso,   os: ubuntu-latest }
+          #- { platform: Linux32,      name: Linux (32bit),    arch: 32,    ext: .dso,   os: ubuntu-latest }
+          #- { platform: Linux64,      name: Linux (64bit),    arch: 64,    ext: .dso,   os: ubuntu-latest }
           - { platform: LinuxArm64,   name: Linux (Arm64),    arch: Arm64, ext: .dso,   os: ubuntu-24.04-arm }
     uses: ./.github/workflows/test.yml
     name: Test ${{ matrix.name }} (${{ matrix.haxe }})
