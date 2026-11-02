@@ -7,8 +7,12 @@
 		<file name="c17.c" c_standard="17" />
 	</files>
 
-	<files id="objc_test">
+	<files id="objc_test" cxx_standard="14" c_standard="17">
+		<!-- should fall back to c++ std if no objc++ standard is given -->
+		<file name="objcxx14.mm" />
 		<file name="objcxx11.mm" objcxx_standard="11" />
+		<!-- should fall back to c std if no objc standard is given -->
+		<file name="objc17.m" />
 		<file name="objc11.m" objc_standard="11" />
 	</files>
 
