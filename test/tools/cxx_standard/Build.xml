@@ -7,9 +7,15 @@
 		<file name="c17.c" c_standard="17" />
 	</files>
 
+	<files id="objc_test">
+		<file name="objcxx11.mm" objcxx_standard="11" />
+		<file name="objc11.m" objc_standard="11" />
+	</files>
+
 	<set name="EXESUFFIX" value=".exe" if="windows" />
 
 	<target id="default" tool="linker" toolid="exe" output="main${EXESUFFIX}">
 		<files id="test"/>
+		<files id="objc_test" if="macos" />
 	</target>
 </xml>
