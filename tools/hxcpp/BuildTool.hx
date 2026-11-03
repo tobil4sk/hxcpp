@@ -1033,8 +1033,6 @@ class BuildTool
             Log.warn('Increasing default Obj-C++ standard to Obj-C++11 instead of Obj-C++${defaultObjCxxStandard}');
             defaultObjCxxStandard = 11;
          }
-      } else {
-         defaultObjCxxStandard = 11;
       }
 
       if (inXML.has.c_standard)
